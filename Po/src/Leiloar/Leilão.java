@@ -1,34 +1,44 @@
 package Leiloar;
 
+import AlugaFilmes.filme;
+
 public class Leilão {
 
 	private String bemLeiloado;
-	private Double valorInicial;
-	private boolean abertoFechado;
-
+	private Integer valorMinimo;
+	private boolean status;
+	private Lance lanceVencedor;
 	
 
-	public Leilão(String bemLeiloado ,Double valorInicial,boolean abertoFechado) {
+	public Leilão(String bemLeiloado, Integer valorMinimo) {
 		super();
 		this.bemLeiloado = bemLeiloado;
-		this.valorInicial = valorInicial;
-		this.abertoFechado = abertoFechado;
+		this.valorMinimo = valorMinimo;
+		this.status = true;
 	}
 
-	public void registrarLance(String nome, Double valor) {
-
-		if (valor > valorInicial) {
-
-			valorInicial = valor;
-
+	public void registrarLance(String nome, Integer valor) {
+		if (status) {
+			if (lanceVencedor != null && valor > lanceVencedor.getValor()) {
+				lanceVencedor.setNomeArrematante(nome);
+				lanceVencedor.setValor(valor);
+			} else if (lanceVencedor == null && valor > valorMinimo) {
+				lanceVencedor = new Lance(nome, valor);
+			}
 		}
 
 	}
 
-	public String finalizar(String nome, Double valor) {
+	public void finalizar() {
 
-		return nome+valor;
-		
+		status = false;
+		if (lanceVencedor != null) {
+			System.out.println("Bem leiloado: " + bemLeiloado);
+			System.out.println("Nome do arrematante: " + lanceVencedor.getNomeArrematante());
+			System.out.println("Valor:" + lanceVencedor.getValor());
+		} else {
+			System.out.println("Sem lance vencedor");
+		}
 	}
-	
+
 }
