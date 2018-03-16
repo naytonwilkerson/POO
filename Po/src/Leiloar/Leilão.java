@@ -19,6 +19,7 @@ public class Leilão {
 
 	public void registrarLance(String nome, Integer valor) {
 		if (status) {
+			
 			if (lanceVencedor != null && valor > lanceVencedor.getValor()) {
 				lanceVencedor.setNomeArrematante(nome);
 				lanceVencedor.setValor(valor);
